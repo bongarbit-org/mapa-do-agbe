@@ -86,7 +86,7 @@
   .swatch{width:52px;height:44px;border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;cursor:pointer;position:relative;padding:0}
   .swatch[aria-pressed="true"]{outline:3px solid var(--focus);outline-offset:2px}
   .swatch.vazio{background:var(--papel-escuro) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 10L10 0' stroke='%23be7f5e' stroke-width='2'/%3E%3C/svg%3E")}
-  .swatch span{position:absolute;left:3px;bottom:2px;font:var(--fw-bold) 9px var(--font-sans);letter-spacing:.04em;text-transform:uppercase}
+  .swatch span{position:absolute;left:3px;right:2px;bottom:2px;text-align:left;font:var(--fw-bold) 8.5px/1.05 var(--font-sans);letter-spacing:0;text-transform:uppercase}
   .acoes{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin-top:var(--sp-3)}
   button.acao{font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;
     padding:var(--sp-3) var(--sp-4);border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;
@@ -202,11 +202,13 @@
     <p class="eyebrow">Cores</p>
     <details id="maisCores">
       <summary>Mais cores</summary>
-      <p class="ajuda" style="margin:10px 0 6px">Ligue outras cores da paleta Bongarbit ou acrescente
-        uma cor sua à caixa de miçangas.</p>
+      <p class="eyebrow" style="margin-top:var(--sp-3)">Cores da Bongarbit</p>
+      <p class="ajuda" style="margin:0 0 6px">Toque para levar a cor à caixa de miçangas.</p>
       <div class="paleta" id="reserva"></div>
-      <div class="acoes">
-        <input type="color" id="novaCor" value="#7a9e9f" aria-label="nova cor">
+      <p class="eyebrow" style="margin-top:var(--sp-4)">Cor própria</p>
+      <p class="ajuda" style="margin:0 0 6px">Só se a cor que você precisa não está na paleta da marca.</p>
+      <div class="acoes" style="margin-top:0">
+        <input type="color" id="novaCor" value="#7a9e9f" aria-label="Escolher cor própria">
         <button class="acao" id="addCor">Acrescentar cor</button>
       </div>
     </details>
@@ -266,8 +268,12 @@ const PALETA = [
   { id:4, nome:'terracota', hex:0xb14826, ativa:false },
   { id:5, nome:'baobá',     hex:0x31671f, ativa:false },
   { id:6, nome:'azul',      hex:0x376182, ativa:false },
-  { id:7, nome:'grafite',   hex:0x161512, ativa:false }
+  { id:7, nome:'grafite',   hex:0x161512, ativa:false },
+  { id:201, nome:'terracota tinta', hex:0x963720, ativa:false },
+  { id:202, nome:'areia',     hex:0xd3ad84, ativa:false },
+  { id:203, nome:'areia tinta', hex:0xbe7f5e, ativa:false }
 ];
+const MARCA = PALETA.filter(p => p.id).map(p => ({ ...p }));   // cores do brand/design.md
 const PORID = new Map(PALETA.map(p => [p.id, p]));
 const CORES_SALVAS = 'agbe-paleta-v1';
 try {
@@ -804,15 +810,20 @@ function desenharPaleta(){
     reserva.appendChild(b);
   }
   if (!reserva.children.length)
-    reserva.innerHTML = '<p class="ajuda" style="margin:0">Todas as cores da paleta já estão na caixa.</p>';
+    reserva.innerHTML = '<p class="ajuda" style="margin:0">Todas as cores da Bongarbit já estão na caixa.</p>';
 }
 desenharPaleta();
 
 document.getElementById('addCor').addEventListener('click', () => {
   const valor = document.getElementById('novaCor').value;
   const hex = parseInt(valor.slice(1), 16);
+  const igual = PALETA.find(p => p.hex === hex);      // cor já existe (marca ou própria): só liga
+  if (igual){
+    igual.ativa = true; corAtual = igual.id;
+    guardarPaleta(); desenharPaleta(); return;
+  }
   const id = Math.max(...PALETA.map(p => p.id)) + 1;
-  if (id > 255) return;
+  if (id > 255){ alert('A caixa de miçangas está cheia.'); return; }
   const p = { id, nome: valor.toUpperCase(), hex, ativa:true, extra:true };
   PALETA.push(p); PORID.set(id, p);
   corAtual = id;
@@ -882,6 +893,7 @@ document.getElementById('arquivo').addEventListener('change', async (ev) => {
     if (p.paleta){
       PALETA.length = 1; PORID.clear(); PORID.set(0, PALETA[0]);
       for (const c of p.paleta){ PALETA.push(c); PORID.set(c.id, c); }
+      for (const m of MARCA) if (!PORID.has(m.id)){ const c = { ...m, ativa:false }; PALETA.push(c); PORID.set(c.id, c); }
       corAtual = PALETA.find(c => c.id && c.ativa)?.id ?? 0;
       guardarPaleta(); desenharPaleta();
     }
