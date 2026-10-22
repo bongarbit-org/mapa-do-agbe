@@ -55,6 +55,15 @@
   .filete{height:24px;border:0;margin:var(--sp-5) 0;background:url(brand/assets/logo/ornamento.png) center/contain no-repeat}
   .ctrl{display:block;font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;margin:0 0 var(--sp-4)}
   .ctrl .linha{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp-2);gap:var(--sp-2)}
+  .ctrl{position:relative}
+  .dica{font:var(--fw-bold) var(--fs-12)/1 var(--font-sans);width:22px;height:22px;padding:0;margin-left:var(--sp-2);
+    vertical-align:middle;border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;background:transparent;
+    color:var(--preto-grafite);cursor:help}
+  .dica[aria-expanded="true"]{background:var(--preto-grafite);color:var(--papel-cartaz)}
+  .balao{display:none;position:absolute;left:0;right:0;top:100%;z-index:6;margin-top:var(--sp-1);padding:var(--sp-3) var(--sp-4);
+    background:var(--papel-claro);border:var(--rule-thin) solid var(--preto-grafite);box-shadow:var(--shadow-carimbo);
+    font:var(--type-small);text-transform:none;letter-spacing:0;color:var(--preto-grafite)}
+  .ctrl:has(.dica:hover) .balao,.ctrl:has(.dica:focus-visible) .balao,.ctrl:has(.dica[aria-expanded="true"]) .balao{display:block}
   .ctrl output{font:var(--fw-semibold) var(--fs-18)/1 var(--font-condensed);letter-spacing:0;text-transform:none;color:var(--terracota-tinta)}
   input[type=range]{width:100%;accent-color:var(--terracota-tinta);height:26px}
   .chk{display:flex;gap:var(--sp-2);align-items:center;font:var(--type-kicker);letter-spacing:var(--tracking-kicker);
@@ -174,8 +183,12 @@
       <input type="range" id="pontos" min="6" max="48" step="1" value="24">
     </label>
     <label class="ctrl">
-      <span class="linha"><span>Tamanho da cabaça</span><output id="outTam">29 cm de bojo</output></span>
+      <span class="linha"><span>Tamanho da cabaça
+        <button type="button" class="dica" aria-label="Como o tamanho é medido" aria-expanded="false" aria-describedby="dicaTam">?</button></span><output id="outTam">29 cm de bojo</output></span>
       <input type="range" id="tam" min="60" max="160" step="5" value="100">
+      <span class="balao" id="dicaTam" role="tooltip">O tamanho é o <strong>bojo</strong>: o diâmetro da parte
+        mais larga da cabaça, de um lado ao outro em linha reta, sem contar miçangas nem trança.
+        A 100% o bojo tem 29 cm; o controle vai de 60% a 160% desse tamanho.</span>
     </label>
     <label class="chk"><input type="checkbox" id="verLinhas" checked> mostrar linhas e trança</label>
     <p class="dado" id="dado">—</p>
@@ -952,6 +965,15 @@ document.querySelectorAll('#abas button').forEach(b => b.addEventListener('click
 refazerTudo();
 if (innerWidth <= 900) requestAnimationFrame(() => aplicarZoom(1, { x: 0, y: 0 }));
 stage.setObject(agbe);
+
+// dica do tamanho da cabaça: toque/clique abre e fecha; Esc ou clique fora fecha
+const btnDica = document.querySelector('.dica');
+btnDica.addEventListener('click', (ev) => {
+  ev.preventDefault(); ev.stopPropagation();
+  btnDica.setAttribute('aria-expanded', String(btnDica.getAttribute('aria-expanded') !== 'true'));
+});
+document.addEventListener('click', () => btnDica.setAttribute('aria-expanded', 'false'));
+document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') btnDica.setAttribute('aria-expanded', 'false'); });
 </script>
 </body>
 </html>
