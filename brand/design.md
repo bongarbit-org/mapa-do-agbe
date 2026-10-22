@@ -26,7 +26,7 @@ Páginas na raiz carregam os tokens nesta ordem:
 - `fonts.css` aponta para `../assets/fonts/` — manter a estrutura de pastas.
 - Estilizar sempre com `var(--*)`; não inventar cores ou tamanhos fora dos tokens.
 - Mudanças de identidade mexem só na apresentação (CSS e marcação). Não alterar a lógica de cálculo, a carta nem o 3D.
-- **`brand/` é a identidade vigente.** A pasta `_ds/` é o design system anterior (TheMixMono, cantos e sombras de outra época), mantida só como arquivo: as páginas não dependem dela e novos trabalhos não devem puxar tokens de lá.
+- **`brand/` é a única identidade visual do projeto.** O design system anterior (`_ds/`, TheMixMono) foi removido; recuperável pelo histórico do git, mas não deve voltar às telas.
 - O app está em `agbe-carta.html`; `index.html` só redireciona para ele. O layout descrito abaixo é o de `agbe-carta.html`.
 
 ## Logos (`brand/assets/logo/`)

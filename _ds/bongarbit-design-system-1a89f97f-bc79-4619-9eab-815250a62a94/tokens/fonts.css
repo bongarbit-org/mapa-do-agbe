@@ -1,8 +1,0 @@
-/* The Mix Mono — institutional typeface of Bongarbit. Licensed OTFs supplied by the brand owner. */
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-3-Light.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-4-SemiLight.otf") format("opentype");font-weight:350;font-style:normal;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-5-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-5-RegularIta.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-6-SemiBold.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-7-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"The Mix Mono";src:url("../assets/fonts/TheMixMono-9-Black.otf") format("opentype");font-weight:900;font-style:normal;font-display:swap}

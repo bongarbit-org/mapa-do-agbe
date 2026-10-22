@@ -33,8 +33,7 @@ O editor publicado no GitHub Pages está disponível em:
 ├── agbe.html          # Visualizador do modelo 3D
 ├── agbe-carta.html    # Editor da carta de miçangas e visualização 3D
 ├── three-d-stage.js   # Componente de cena, câmera e exportação
-├── brand/             # Identidade visual vigente: design.md, tokens, fontes e logos
-└── _ds/               # Design system anterior (arquivo; não usar em telas novas)
+└── brand/             # Identidade visual: design.md, tokens, fontes e logos
 ```
 
 ## Como executar
@@ -109,8 +108,6 @@ A identidade vigente está em `brand/`. Leia `brand/design.md` antes de criar no
 - paleta e tipografia (Amatic SC, Cabin e Oswald, substitutas do lettering desenhado à mão);
 - tokens de espaçamento, bordas e efeitos;
 - logos, ornamento e regras de uso.
-
-A pasta `_ds/` guarda o design system anterior (The Mix Mono) só como arquivo; as páginas não dependem dela.
 
 ## Limitações atuais
 
