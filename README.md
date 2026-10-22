@@ -33,7 +33,8 @@ O editor publicado no GitHub Pages está disponível em:
 ├── agbe.html          # Visualizador do modelo 3D
 ├── agbe-carta.html    # Editor da carta de miçangas e visualização 3D
 ├── three-d-stage.js   # Componente de cena, câmera e exportação
-└── _ds/               # Design system, tokens e fontes do Bongarbit
+├── brand/             # Identidade visual vigente: design.md, tokens, fontes e logos
+└── _ds/               # Design system anterior (arquivo; não usar em telas novas)
 ```
 
 ## Como executar
@@ -103,14 +104,13 @@ Módulos utilizados:
 
 ## Identidade visual
 
-A pasta `_ds/` contém o design system do Bongarbit, incluindo:
+A identidade vigente está em `brand/`. Leia `brand/design.md` antes de criar novas telas ou peças visuais e use os tokens de `brand/tokens/` (`var(--*)`).
 
-- paleta institucional;
-- tipografia The Mix Mono;
-- tokens de espaçamento e efeitos;
-- orientações editoriais e de aplicação da marca.
+- paleta e tipografia (Amatic SC, Cabin e Oswald, substitutas do lettering desenhado à mão);
+- tokens de espaçamento, bordas e efeitos;
+- logos, ornamento e regras de uso.
 
-Consulte o arquivo `_ds/.../readme.md` antes de criar novas telas ou peças visuais.
+A pasta `_ds/` guarda o design system anterior (The Mix Mono) só como arquivo; as páginas não dependem dela.
 
 ## Limitações atuais
 

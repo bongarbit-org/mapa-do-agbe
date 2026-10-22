@@ -26,7 +26,8 @@ Páginas na raiz carregam os tokens nesta ordem:
 - `fonts.css` aponta para `../assets/fonts/` — manter a estrutura de pastas.
 - Estilizar sempre com `var(--*)`; não inventar cores ou tamanhos fora dos tokens.
 - Mudanças de identidade mexem só na apresentação (CSS e marcação). Não alterar a lógica de cálculo, a carta nem o 3D.
-- A pasta `_ds/` é o design system anterior (TheMixMono); as páginas não dependem mais dela.
+- **`brand/` é a identidade vigente.** A pasta `_ds/` é o design system anterior (TheMixMono, cantos e sombras de outra época), mantida só como arquivo: as páginas não dependem dela e novos trabalhos não devem puxar tokens de lá.
+- O app está em `agbe-carta.html`; `index.html` só redireciona para ele. O layout descrito abaixo é o de `agbe-carta.html`.
 
 ## Logos (`brand/assets/logo/`)
 | Arquivo | Tinta | Uso |
@@ -36,9 +37,13 @@ Páginas na raiz carregam os tokens nesta ordem:
 | `lockup-horizontal.png` | grafite | Marca completa horizontal, para telas largas fora do app. |
 | `simbolo.png` | grafite | Símbolo isolado. Favicon / ícone (≥32px). |
 | `tagline.png` | grafite | "Escola de Luteria…" manuscrito, quando usado sem o wordmark. |
-| `*-papel.png` (`wordmark-papel`, `ornamento-papel`, `lockup-papel`) | cor de papel | Versões **claras**, para fundos escuros (grafite). Sobre o fundo de papel desta página elas somem — não usar. |
+| `lockup-papel.png` | cor de papel | Marca completa em tinta **clara**, só para fundos escuros (grafite). |
+| `wordmark-papel.png` | cor de papel | Wordmark em tinta clara, só para fundos escuros. |
+| `ornamento-papel.png` | cor de papel | Ornamento em tinta clara, só para fundos escuros. |
 
-Ilustração de apoio: `assets/ilustracoes/cabaca.png` (topo ou estado vazio).
+**Atenção:** "papel" no nome da versão é a cor da tinta, não o fundo. Sobre o papel-cartaz desta página as três somem (papel sobre papel) — nunca usar. Qualquer instrução antiga que diga "sobre fundo papel" está errada.
+
+Ilustração de apoio: `brand/assets/ilustracoes/cabaca.png` (topo ou estado vazio).
 
 `wordmark.png`, `ornamento.png` e `cabaca.png` foram reduzidos (1600px / 1600px / 1000px de lado maior) para carregar rápido; os demais PNGs estão em tamanho original (4–6 mil px) — reduzir antes de usar na página.
 
@@ -67,7 +72,7 @@ Paleta sempre quente; se a tela parecer fria, está errada. Verde-limão e laran
 **Cores de dados não são interface:** as cores das miçangas (paleta do projeto, incluindo cores acrescentadas pelo usuário), o desenho da carta no canvas e os materiais do modelo 3D (cabaça, linhas, trança) representam o objeto real e ficam fora destas regras.
 
 ## Tipografia (fontes substitutas)
-- `--font-hand` Amatic SC 700 — título da página em CAIXA ALTA (`REDE DO AGBÊ`, 56px). Só ≥32px.
+- `--font-hand` Amatic SC 700 — título da página (h1 "Rede do Agbê", exibido como `REDE DO AGBÊ`, 56px) em CAIXA ALTA. O produto/repositório chama-se Mapa do Agbê. Só ≥32px.
 - `--font-sans` Cabin — corpo, labels, botões. Labels/kickers em caixa alta, 700.
 - `--font-condensed` Oswald 500–700 — **números**: valores dos sliders, dados do projeto, zoom, tabela.
 - Papéis prontos: `--type-display`, `--type-headline`, `--type-lede`, `--type-kicker`, `--type-body`, `--type-small`, `--type-numeral`.
@@ -81,7 +86,7 @@ Paleta sempre quente; se a tela parecer fria, está errada. Verde-limão e laran
 ## Layout
 - **Desktop (>900px):** duas colunas. Painel à esquerda (600px, papel-cartaz, rolável) e palco 3D à direita (flexível). Divisória de 3px grafite.
 - **Painel, de cima para baixo:** wordmark centralizado → título → lede terracota → Trançado (sliders e dados) → ornamento → Mapa de miçangas (texto, ações) → ornamento → Cores → ornamento → Miçangas por fiada → mapa editável (zoom, quadro, paleta) → ornamento → rodapé com créditos.
-- **Celular (≤900px):** barra de abas fixa no topo (Ajustes · Mapa · Modelo 3D); aba ativa em grafite com texto papel. Na aba Mapa a paleta vira coluna fixa à direita (66px, `--papel-escuro`) e o botão "Ver tudo" fica grafite na base dela. O rodapé aparece só na aba Ajustes.
+- **Celular (≤900px):** barra de abas fixa no topo (Ajustes · Mapa · Modelo 3D); aba ativa em grafite com texto papel. Na aba Mapa a paleta vira coluna fixa à direita (80px, `--papel-escuro`) e o botão "Ver tudo" fica grafite na base dela (80px). O rodapé aparece só na aba Ajustes.
 - Fundo chapado de papel. Sem foto de fundo, sem padrão, sem gradiente.
 
 ## Componentes
@@ -92,10 +97,11 @@ Paleta sempre quente; se a tela parecer fria, está errada. Verde-limão e laran
 - **Dados do projeto:** uma linha em Oswald 500 16px, terracota-tinta.
 - **Botão secundário (`.acao`):** fundo transparente, borda 2px grafite, Cabin 700 caixa alta, `--shadow-carimbo`. Hover: `translate(-2px,-2px)` + `--shadow-carimbo-lg`. Press: `translate(3px,3px)` + sombra 0. Transição `--dur-fast` `--ease-print`, sem bounce.
 - **Botão primário:** mesmo botão com fundo grafite e texto papel-cartaz. Um por grupo; hoje é "Baixar mapa".
-- **Foco:** `outline: 3px solid var(--focus); outline-offset: 2px` em botões, inputs, amostras e `summary`.
+- **Foco:** `outline: 3px solid var(--focus); outline-offset: 2px` em botões, inputs, amostras e `summary`, reforçado por um filete interno `box-shadow: 0 0 0 2px var(--preto-grafite)` — o ocre sozinho sobre papel dá só ~2,3:1, abaixo dos 3:1 exigidos para indicadores de foco. Em botões com carimbo, manter o carimbo: `box-shadow: var(--shadow-carimbo), 0 0 0 2px var(--preto-grafite)`.
 - **Zoom:** botões quadrados 40px com carimbo; valor em Oswald 600 18px entre eles.
+- **Dica (tooltip) do tamanho da cabaça:** botão "?" quadrado de 22px com borda 2px, **irmão** do slider (nunca dentro do `<label>`), ligado ao balão por `aria-controls`; o slider aponta para o texto com `aria-describedby`. O balão fica em fluxo normal logo abaixo (`--papel-claro`, borda 2px, carimbo), sem cobrir controles. Abre com mouse, foco de teclado ou toque; fecha com Esc, clique fora ou ao sair.
 - **Quadro do mapa:** fundo `--papel-claro`, borda 2px e carimbo; barras de rolagem grafite sobre trilho `--papel-escuro` (14px); `:active` do polegar em `--terracota-queimada`.
-- **Amostras de cor:** 52×44px, borda 2px grafite, nome em Cabin 700 9px caixa alta (papel-cartaz sobre cores escuras, grafite sobre claras). Selecionada: outline ocre. "Vazio": fundo `--papel-escuro` com traços diagonais em `--areia-tinta` (SVG embutido, nunca gradiente).
+- **Amostras de cor:** 64×48px, borda 2px grafite, nome em Cabin 700 10px caixa alta (mínimo legível). A cor do texto é a de maior contraste entre grafite e papel-cartaz, calculada pela luminância da amostra — vale também para cores acrescentadas pelo usuário. **Selecionada:** anel duplo grafite (`0 0 0 2px papel-cartaz, 0 0 0 5px grafite`), sem ocre, para não se confundir com o foco do teclado, que é ocre. "Vazio": fundo `--papel-escuro` com traços diagonais em `--areia-tinta` (SVG embutido, nunca gradiente).
 - **Tabela por fiada:** cabeçalho em Cabin 700 12px caixa alta sobre `--papel`, linha de 2px grafite embaixo; linhas de 1px `--papel-escuro`; números em Oswald, alinhados à direita (primeira coluna à esquerda); rodapé com linha de 2px em cima. Dentro de caixa rolável com borda 2px e carimbo.
 - **Stepper (− n +):** botões 28px, borda 2px grafite, canto 0, sem sombra.
 - **Divisor (`.filete`):** `ornamento.png` centralizado, 24px de altura, como `background` contido — substitui qualquer régua simples.
