@@ -4,8 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Agbê — carta de miçangas</title>
-<link rel="stylesheet" href="_ds/bongarbit-design-system-1a89f97f-bc79-4619-9eab-815250a62a94/tokens/fonts.css">
-<link rel="stylesheet" href="_ds/bongarbit-design-system-1a89f97f-bc79-4619-9eab-815250a62a94/tokens/colors.css">
+<link rel="stylesheet" href="brand/tokens/fonts.css">
+<link rel="stylesheet" href="brand/tokens/colors.css">
+<link rel="stylesheet" href="brand/tokens/typography.css">
+<link rel="stylesheet" href="brand/tokens/spacing.css">
+<link rel="stylesheet" href="brand/tokens/effects.css">
+<link rel="stylesheet" href="brand/tokens/base.css">
 <script type="importmap">
 {
   "imports": {
@@ -25,93 +29,103 @@
 </script>
 <style>
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;background:#ead6bf;color:#161512;
-    font-family:"The Mix Mono","TheMixMono",ui-monospace,monospace;overscroll-behavior:none}
+  html,body{margin:0;height:100%;overscroll-behavior:none}
   #app{display:flex;height:100dvh}
-  #painel{width:580px;flex:none;border-right:1px solid #161512;display:block;
-    padding:20px;overflow:auto;background:#f0e2cd;-webkit-overflow-scrolling:touch}
+  #painel{width:600px;flex:none;border-right:var(--rule) solid var(--preto-grafite);display:block;
+    padding:var(--sp-5);overflow:auto;background:var(--papel-cartaz);-webkit-overflow-scrolling:touch}
   #painel > *{flex:none}
   #visor{flex:1;position:relative;min-width:0;min-height:0}
   three-d-stage:not(:defined){visibility:hidden}
   three-d-stage{display:block;width:100%;height:100%}
-  #girarVisor{position:absolute;left:16px;top:16px;z-index:5;display:flex;gap:8px;align-items:center;
-    font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    padding:10px 12px;border:1px solid #161512;background:#ead6bf;color:#161512;cursor:pointer;
-    box-shadow:3px 3px 0 #16151230}
-  #girarVisor:hover{background:#d3ad84}
-  #girarVisor:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #16151230}
-  #girarVisor input{accent-color:#b14826;width:16px;height:16px;margin:0}
-  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin:0 0 6px}
-  h1{font-size:22px;line-height:1.2;margin:0 0 4px;letter-spacing:.02em}
-  p.ajuda{font-size:12px;line-height:1.55;margin:0 0 14px;color:#161512b8}
-  .filete{height:0;border-top:1px solid #16151230;margin:14px 0}
-  .ctrl{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px}
-  .ctrl .linha{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;gap:8px}
-  .ctrl output{font-size:12px;letter-spacing:.06em;text-transform:none;color:#b14826}
-  input[type=range]{width:100%;accent-color:#b14826;height:26px}
-  .chk{display:flex;gap:8px;align-items:center;font-size:11px;letter-spacing:.14em;
-    text-transform:uppercase;margin-bottom:10px}
-  .chk input{accent-color:#b14826;width:18px;height:18px}
-  .dado{font-size:11px;line-height:1.6;color:#161512b0;margin:0}
-  .quadro{border:1px solid #161512;box-shadow:3px 3px 0 #16151230;background:#ead6bf;
+  button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  #girarVisor{position:absolute;left:var(--sp-4);top:var(--sp-4);z-index:5;display:flex;gap:var(--sp-2);align-items:center;
+    font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;
+    padding:var(--sp-3) var(--sp-4);border:var(--rule-thin) solid var(--preto-grafite);background:var(--papel-cartaz);
+    color:var(--preto-grafite);cursor:pointer;box-shadow:var(--shadow-carimbo);
+    transition:transform var(--dur-fast) var(--ease-print),box-shadow var(--dur-fast) var(--ease-print)}
+  #girarVisor:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-carimbo-lg)}
+  #girarVisor:active{transform:translate(3px,3px);box-shadow:none}
+  #girarVisor input{accent-color:var(--terracota-tinta);width:16px;height:16px;margin:0}
+  .cabecalho{text-align:center;margin:0 0 var(--sp-5)}
+  .cabecalho img{display:block;width:min(100%,340px);height:auto;margin:0 auto var(--sp-4)}
+  .eyebrow{font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;margin:0 0 var(--sp-2)}
+  h1{font:var(--type-display);font-size:var(--fs-56);text-transform:uppercase;margin:0 0 var(--sp-2)}
+  p.ajuda{font:var(--type-small);margin:0 0 var(--sp-4);color:var(--fg-2)}
+  p.lede{font:var(--type-lede);font-size:var(--fs-18);color:var(--terracota-tinta);margin:0 auto var(--sp-4);max-width:46ch;text-align:center}
+  .filete{height:24px;border:0;margin:var(--sp-5) 0;background:url(brand/assets/logo/ornamento.png) center/contain no-repeat}
+  .ctrl{display:block;font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;margin:0 0 var(--sp-4)}
+  .ctrl .linha{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp-2);gap:var(--sp-2)}
+  .ctrl output{font:var(--fw-semibold) var(--fs-18)/1 var(--font-condensed);letter-spacing:0;text-transform:none;color:var(--terracota-tinta)}
+  input[type=range]{width:100%;accent-color:var(--terracota-tinta);height:26px}
+  .chk{display:flex;gap:var(--sp-2);align-items:center;font:var(--type-kicker);letter-spacing:var(--tracking-kicker);
+    text-transform:uppercase;margin-bottom:var(--sp-3)}
+  .chk input{accent-color:var(--terracota-tinta);width:18px;height:18px}
+  .dado{font:var(--fw-medium) var(--fs-16)/1.4 var(--font-condensed);color:var(--terracota-tinta);margin:0}
+  .quadro{border:var(--rule-thin) solid var(--preto-grafite);box-shadow:var(--shadow-carimbo);background:var(--papel-claro);
     overflow:scroll;max-height:52vh;min-height:220px;touch-action:none;-webkit-overflow-scrolling:touch;
-    scrollbar-width:auto;scrollbar-color:#161512 #e2cdb0}
-  .quadro::-webkit-scrollbar{width:14px;height:14px;background:#e2cdb0}
-  .quadro::-webkit-scrollbar-track{background:#e2cdb0;border-left:1px solid #16151230;border-top:1px solid #16151230}
-  .quadro::-webkit-scrollbar-thumb{background:#161512;border:3px solid #e2cdb0}
-  .quadro::-webkit-scrollbar-thumb:active{background:#b14826}
-  .quadro::-webkit-scrollbar-corner{background:#e2cdb0}
+    scrollbar-width:auto;scrollbar-color:var(--preto-grafite) var(--papel-escuro)}
+  .quadro::-webkit-scrollbar{width:14px;height:14px;background:var(--papel-escuro)}
+  .quadro::-webkit-scrollbar-track{background:var(--papel-escuro);border-left:1px solid var(--preto-grafite);border-top:1px solid var(--preto-grafite)}
+  .quadro::-webkit-scrollbar-thumb{background:var(--preto-grafite);border:3px solid var(--papel-escuro)}
+  .quadro::-webkit-scrollbar-thumb:active{background:var(--terracota-queimada)}
+  .quadro::-webkit-scrollbar-corner{background:var(--papel-escuro)}
   #verTudo{display:none}
-  .zoom{display:flex;gap:6px;align-items:center;margin:0 0 8px;font-size:11px;letter-spacing:.14em}
-  .zoom button{font:inherit;font-size:13px;min-width:38px;height:38px;padding:0 10px;
-    border:1px solid #161512;background:#ead6bf;color:#161512;cursor:pointer;
-    box-shadow:2px 2px 0 #16151230}
-  .zoom button:active{transform:translate(2px,2px);box-shadow:0 0 0 #16151230}
-  .zoom span{min-width:52px;text-align:center;color:#161512b0}
+  .zoom{display:flex;gap:var(--sp-2);align-items:center;margin:0 0 var(--sp-3);font:var(--type-kicker);letter-spacing:var(--tracking-kicker)}
+  .zoom button{font:var(--fw-bold) var(--fs-14)/1 var(--font-sans);text-transform:uppercase;min-width:40px;height:40px;padding:0 var(--sp-3);
+    border:var(--rule-thin) solid var(--preto-grafite);background:transparent;color:var(--preto-grafite);cursor:pointer;
+    box-shadow:var(--shadow-carimbo);transition:transform var(--dur-fast) var(--ease-print),box-shadow var(--dur-fast) var(--ease-print)}
+  .zoom button:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-carimbo-lg)}
+  .zoom button:active{transform:translate(3px,3px);box-shadow:none}
+  .zoom span{min-width:56px;text-align:center;font:var(--fw-semibold) var(--fs-18)/1 var(--font-condensed)}
   #lona{position:relative;transform-origin:0 0}
   canvas#chart{display:block;touch-action:none;transform-origin:0 0}
-  summary{font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;
-    padding:10px 0;border-top:1px solid #16151230;margin-top:12px}
-  input[type=color]{width:52px;height:44px;padding:0;border:1px solid #161512;background:#ead6bf;cursor:pointer}
-  .paleta{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-  .swatch{width:52px;height:44px;border:1px solid #161512;cursor:pointer;position:relative;padding:0}
-  .swatch[aria-pressed="true"]{outline:2px solid #376182;outline-offset:2px}
-  .swatch span{position:absolute;left:3px;bottom:2px;font-size:9px;letter-spacing:.08em}
-  .acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-  button.acao{font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    padding:12px 14px;border:1px solid #161512;background:#ead6bf;color:#161512;cursor:pointer;
-    box-shadow:3px 3px 0 #16151230;transition:background 200ms cubic-bezier(.2,.6,.2,1)}
-  button.acao:hover{background:#d3ad84}
-  button.acao:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #16151230}
-  table{border-collapse:collapse;width:100%;font-size:11px}
-  th,td{border:1px solid #16151238;padding:5px 7px;text-align:right}
-  th{letter-spacing:.1em;text-transform:uppercase;font-size:10px;background:#e2cdb0}
+  summary{font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;cursor:pointer;
+    padding:var(--sp-3) 0;border-top:var(--rule-thin) solid var(--preto-grafite);margin-top:var(--sp-3)}
+  input[type=color]{width:52px;height:44px;padding:0;border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;background:var(--papel-claro);cursor:pointer}
+  .paleta{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-2)}
+  .swatch{width:52px;height:44px;border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;cursor:pointer;position:relative;padding:0}
+  .swatch[aria-pressed="true"]{outline:3px solid var(--focus);outline-offset:2px}
+  .swatch.vazio{background:var(--papel-escuro) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M0 10L10 0' stroke='%23be7f5e' stroke-width='2'/%3E%3C/svg%3E")}
+  .swatch span{position:absolute;left:3px;bottom:2px;font:var(--fw-bold) 9px var(--font-sans);letter-spacing:.04em;text-transform:uppercase}
+  .acoes{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin-top:var(--sp-3)}
+  button.acao{font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;
+    padding:var(--sp-3) var(--sp-4);border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;
+    background:transparent;color:var(--preto-grafite);cursor:pointer;box-shadow:var(--shadow-carimbo);
+    transition:transform var(--dur-fast) var(--ease-print),box-shadow var(--dur-fast) var(--ease-print)}
+  button.acao:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-carimbo-lg)}
+  button.acao:active{transform:translate(3px,3px);box-shadow:none}
+  button.acao.principal{background:var(--preto-grafite);color:var(--papel-cartaz)}
+  table{border-collapse:collapse;width:100%}
+  th,td{border-bottom:1px solid var(--papel-escuro);padding:var(--sp-2);text-align:right;font:var(--fw-medium) var(--fs-16)/1.2 var(--font-condensed)}
+  th{letter-spacing:var(--tracking-kicker);text-transform:uppercase;font:var(--fw-bold) var(--fs-12)/1.2 var(--font-sans);
+    background:var(--papel);border-bottom:var(--rule-thin) solid var(--preto-grafite)}
   th:first-child,td:first-child{text-align:left}
-  tfoot td{font-weight:700;background:#e2cdb0}
-  .rolagem{max-height:280px;min-height:180px;overflow:auto;border:1px solid #161512;
-    box-shadow:3px 3px 0 #16151230}
-  .passo{display:flex;gap:4px;justify-content:flex-end;align-items:center}
-  .passo button{font:inherit;font-size:12px;width:26px;height:26px;line-height:1;padding:0;
-    border:1px solid #161512;background:#ead6bf;color:#161512;cursor:pointer}
+  tfoot td{font-weight:var(--fw-bold);background:var(--papel);border-top:var(--rule-thin) solid var(--preto-grafite);border-bottom:0}
+  .rolagem{max-height:280px;min-height:180px;overflow:auto;border:var(--rule-thin) solid var(--preto-grafite);
+    box-shadow:var(--shadow-carimbo);background:var(--papel-claro)}
+  .passo{display:flex;gap:var(--sp-1);justify-content:flex-end;align-items:center}
+  .passo button{font:var(--fw-bold) var(--fs-14)/1 var(--font-sans);width:28px;height:28px;padding:0;
+    border:var(--rule-thin) solid var(--preto-grafite);border-radius:0;background:transparent;color:var(--preto-grafite);cursor:pointer}
   .passo button:active{transform:translate(1px,1px)}
-  .passo span{min-width:18px;text-align:center}
+  .passo span{min-width:20px;text-align:center}
+  .rodape{text-align:center;margin-top:var(--sp-6)}
+  .rodape p{margin:0 0 var(--sp-1)}
   #abas{display:none}
-  a{color:#b14826}
-  a:hover{color:#993d20}
+  @media (min-width:901px){#mapaSec{margin-top:var(--sp-6)}}
   @media (max-width:900px){
     body{display:flex;flex-direction:column;height:100dvh;overflow:hidden}
     #app{flex:1;min-height:0;height:auto;flex-direction:column}
-    #abas{position:sticky;top:0;z-index:8;display:flex;flex:none;border-bottom:1px solid #161512;background:#e2cdb0}
-    #abas button{flex:1;font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-      padding:14px 8px;border:0;border-right:1px solid #161512;background:transparent;color:#161512;cursor:pointer}
+    #abas{position:sticky;top:0;z-index:8;display:flex;flex:none;border-bottom:var(--rule) solid var(--preto-grafite);background:var(--papel-escuro)}
+    #abas button{flex:1;font:var(--type-kicker);letter-spacing:var(--tracking-kicker);text-transform:uppercase;
+      padding:14px 8px;border:0;border-right:var(--rule-thin) solid var(--preto-grafite);border-radius:0;background:transparent;color:var(--preto-grafite);cursor:pointer}
     #abas button:last-child{border-right:0}
-    #abas button[aria-pressed="true"]{background:#161512;color:#ead6bf}
+    #abas button[aria-pressed="true"]{background:var(--preto-grafite);color:var(--papel-cartaz)}
   #visor{width:100%;flex:1;min-height:0}
     #painel{width:100%;flex:1;border-right:0;min-height:0;padding-right:20px}
     body[data-aba="mapa"] #painel{padding-right:78px}
     #paleta{position:fixed;right:0;top:var(--abas,50px);bottom:0;width:66px;margin:0;padding:8px 7px;gap:6px;
       flex-direction:column;flex-wrap:nowrap;overflow:auto;z-index:7;
-      background:#e2cdb0;border-left:1px solid #161512;box-shadow:-3px 0 0 #16151218}
+      background:var(--papel-escuro);border-left:var(--rule-thin) solid var(--preto-grafite)}
     #paleta .swatch{width:52px;height:44px;flex:none}
     body[data-aba="modelo"] #paleta{display:none}
     three-d-stage{width:100%;height:100%;min-height:0}
@@ -124,15 +138,16 @@
     #mapaSec .tituloMapa,#mapaSec .dicaMapa,#mapaSec .zoom{display:none}
     #paleta{padding-bottom:56px}
     #verTudo{display:block;position:fixed;right:0;bottom:0;width:66px;height:48px;z-index:8;
-      font:inherit;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-      border:0;border-top:1px solid #161512;border-left:1px solid #161512;
-      background:#161512;color:#ead6bf;cursor:pointer}
+      font:var(--fw-bold) 10px var(--font-sans);letter-spacing:.06em;text-transform:uppercase;
+      border:0;border-top:var(--rule-thin) solid var(--preto-grafite);border-left:var(--rule-thin) solid var(--preto-grafite);border-radius:0;
+      background:var(--preto-grafite);color:var(--papel-cartaz);cursor:pointer}
     body[data-aba="mapa"] #verTudo{display:block}
     body[data-aba="ajustes"] #verTudo,body[data-aba="modelo"] #verTudo{display:none}
     body[data-aba="mapa"] #ajustes{display:none}
     body[data-aba="ajustes"] #mapaSec{display:none}
     body[data-aba="ajustes"] #paleta{display:none}
     body[data-aba="modelo"] #painel{display:none}
+    body:not([data-aba="ajustes"]) .rodape{display:none}
   }
 </style>
 </head>
@@ -145,9 +160,11 @@
 <div id="app">
   <aside id="painel">
    <section id="ajustes">
-    <p class="eyebrow">Escola de luteria da Xambá</p>
-    <h1>Rede do Agbê</h1>
-    <p class="ajuda">Da trança de cima sai uma linha dupla por ponto da argola: cada uma abre para um
+    <header class="cabecalho">
+      <img src="brand/assets/logo/wordmark.png" alt="Bongarbit — Escola de Luteria da Xambá">
+      <h1>Rede do Agbê</h1>
+    </header>
+    <p class="lede">Da trança de cima sai uma linha dupla por ponto da argola: cada uma abre para um
       lado, encontra a vizinha e amarra um nó. As miçangas — 10 mm, medida fixa — ficam <em>entre</em>
       um nó e outro, nunca sobre o nó.</p>
 
@@ -175,7 +192,7 @@
       <button class="acao" data-acao="listras">Listras retas</button>
       <button class="acao" data-acao="cheio">Preencher</button>
       <button class="acao" data-acao="limpar">Limpar</button>
-      <button class="acao" data-acao="png">Baixar mapa</button>
+      <button class="acao principal" data-acao="png">Baixar mapa</button>
       <button class="acao" data-acao="exportar">Exportar projeto</button>
       <button class="acao" data-acao="importar">Importar projeto</button>
       <input type="file" id="arquivo" accept=".agbe,.json,application/json" hidden>
@@ -221,10 +238,16 @@
     <div class="paleta" id="paleta"></div>
     <button type="button" id="verTudo">Ver tudo</button>
    </section>
+    <footer class="rodape">
+      <div class="filete"></div>
+      <p class="eyebrow">Ministério da Cultura e Programa Rouanet Nordeste apresentam</p>
+      <p class="eyebrow">BONGARBIT.ORG · @BONGARBIT</p>
+      <p class="ajuda">Identidade visual: Adelson Boris e Philipe Camarão</p>
+    </footer>
   </aside>
   <div id="visor">
     <label id="girarVisor"><input type="checkbox" id="girar" checked> girando</label>
-    <three-d-stage name="agbe" background="#ead6bf" autorotate></three-d-stage>
+    <three-d-stage name="agbe" background="#f0d6b8" autorotate></three-d-stage>
   </div>
 </div>
 <script src="./three-d-stage.js"></script>
@@ -756,14 +779,12 @@ const reserva = document.getElementById('reserva');
 function botaoCor(p, ativo){
   const b = document.createElement('button');
   b.className = 'swatch'; b.type = 'button';
-  b.style.background = p.hex === null
-    ? 'repeating-linear-gradient(45deg,#e2cdb0 0 5px,#d3ad84 5px 10px)'
-    : hexCss(p.hex);
+  if (p.hex === null) b.classList.add('vazio'); else b.style.background = hexCss(p.hex);
   b.title = p.nome;
   b.dataset.cor = p.id;
   b.setAttribute('aria-pressed', String(ativo));
   const claro = p.hex !== null && ((p.hex >> 16) + ((p.hex >> 8) & 255) + (p.hex & 255)) < 300;
-  b.innerHTML = `<span style="color:${claro ? '#ead6bf' : '#161512aa'}">${p.nome}</span>`;
+  b.innerHTML = `<span style="color:${claro ? '#f0d6b8' : '#161512'}">${p.nome}</span>`;
   return b;
 }
 
